@@ -10,3 +10,40 @@
 // con difficoltà 0 => tra 1 e 100
 // con difficoltà 1 =>  tra 1 e 80
 // con difficoltà 2 => tra 1 e 50
+
+var listaNumeriRandom = [];
+var numeroRandom;
+var controllo;
+
+//riempio un array di numeri random ognuno diverso dall'altro.
+while (listaNumeriRandom.length < 16) {
+    do {
+        numeroRandom = randomNumber(1,100);
+        controllo = checkElement(listaNumeriRandom, numeroRandom);
+    } while(controllo == true)
+
+    listaNumeriRandom.push(numeroRandom);
+}
+console.log(listaNumeriRandom);
+
+
+
+
+
+// ** FUNZIONI ** //
+// Genera e restituisce un numero random in un intervallo
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+//dato un elemento e un array, controlla che l'elemento sia presente nell'array
+//restituisce true se l'elemento è presente nell'array.
+function checkElement (array, element){
+    var check = false;
+    for(var i = 0; i < array.length; i ++){
+        if (element == array[i]){
+            check = true;
+        }
+    }
+    return check;
+}
