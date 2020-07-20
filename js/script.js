@@ -16,35 +16,65 @@ var listaNumeriScelti = [];
 var numeroRandom;
 var numeroScelto;
 var controllo;
+var range;
 
-//riempio un array di numeri random ognuno diverso dall'altro.
+// Si seleziona la difficoltà del gioco
+var difficolta = parseInt(prompt('Scegli il grado di difficoltà del gioco da 0 a 2'));
+
+switch (difficolta){
+    case 0:
+    range = 100;
+    case 1:
+    range = 80;
+    case 2:
+    range = 50;
+}
+
+//si riempie un array di numeri random ognuno diverso dall'altro.
 while (listaNumeriRandom.length < 16) {
     do {
-        numeroRandom = randomNumber(1,100);
+        numeroRandom = (randomNumber(1,range));
         controllo = checkElement(listaNumeriRandom, numeroRandom);
     } while(controllo == true)
-
     listaNumeriRandom.push(numeroRandom);
 }
+
+//ordina gli elementi dell'array random.
+listaNumeriRandom.sort();
 console.log(listaNumeriRandom);
 
-
+//Logica gioco
 do {
-    if (listaNumeriScelti.length < 5){
+    //Chiede un numero fino alla sconfitta oppure al raggiungimento del valore max
+    //settato dalla difficoltà del gioco
+    if (listaNumeriScelti.length < (range - 16)){
         numeroScelto = parseInt(prompt('Scegli un numero!'));
         controllo = checkElement(listaNumeriRandom, numeroScelto);
         if(controllo==true){
-            alert('Hai perso!');
+            alert('Hai beccato una mina! Hai perso!');
         } else {
-            listaNumeriScelti.push(numeroScelto);
+            // controllo se numero inserito è gia' inserito
+            controllo = checkElement(listaNumeriScelti, numeroScelto);
+            if(controllo==true){
+                alert('Numero già scelto, riprova!');
+                controllo = false;
+            } else {
+                //inserisce valore nella lista dei numeri scelti (punti)
+                listaNumeriScelti.push(numeroScelto);
+            }
         }
     } else {
-        alert('Complimenti hai vinto!!!');
+        //Caso: array numeri scelti riempito tutto (trovate tutte le mine). Vittoria
+        alert('Complimenti, hai vinto!!!');
         controllo=true;
     }
 } while (controllo==false);
 
-console.log('Hai totalizzato: ' + listaNumeriScelti.length + " punti!");
+//Stampa a video
+
+document.getElementById('campo-minato').innerHTML = 'Hai totalizzato: ' + listaNumeriScelti.length + ' punti!';
+document.getElementById('lista-numeri-random').innerHTML = "Ecco le mine presenti: " + listaNumeriRandom;
+document.getElementById('lista-numeri-scelti').innerHTML = "Ecco i tuoi punti: " + listaNumeriScelti;
 
 
 
