@@ -12,7 +12,9 @@
 // con difficoltà 2 => tra 1 e 50
 
 var listaNumeriRandom = [];
+var listaNumeriScelti = [];
 var numeroRandom;
+var numeroScelto;
 var controllo;
 
 //riempio un array di numeri random ognuno diverso dall'altro.
@@ -26,6 +28,23 @@ while (listaNumeriRandom.length < 16) {
 }
 console.log(listaNumeriRandom);
 
+
+do {
+    if (listaNumeriScelti.length < 5){
+        numeroScelto = parseInt(prompt('Scegli un numero!'));
+        controllo = checkElement(listaNumeriRandom, numeroScelto);
+        if(controllo==true){
+            alert('Hai perso!');
+        } else {
+            listaNumeriScelti.push(numeroScelto);
+        }
+    } else {
+        alert('Complimenti hai vinto!!!');
+        controllo=true;
+    }
+} while (controllo==false);
+
+console.log('Hai totalizzato: ' + listaNumeriScelti.length + " punti!");
 
 
 
